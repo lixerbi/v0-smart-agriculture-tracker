@@ -29,7 +29,6 @@ export default function PriceTrendChart({ item, onClose }: PriceTrendChartProps)
         const date = new Date(today)
         date.setDate(date.getDate() - i)
 
-        // Generate more realistic trending data
         const trendFactor = (6 - i) * 0.5
         const variation = (Math.random() - 0.5) * 12 + trendFactor
         const price = Math.max(Math.round((basePrice + variation) * 100) / 100, basePrice * 0.8)
@@ -42,7 +41,6 @@ export default function PriceTrendChart({ item, onClose }: PriceTrendChartProps)
         })
       }
 
-      // Store history for persistence
       localStorage.setItem(`priceHistory_${item.name}_${item.region}`, JSON.stringify(history))
     }
 
@@ -60,11 +58,11 @@ export default function PriceTrendChart({ item, onClose }: PriceTrendChartProps)
   const trend = priceChange > 0 ? "rising" : priceChange < 0 ? "falling" : "stable"
 
   return (
-    <Card className="mt-6">
+    <Card className="mt-6 animate-fade-in-up border-2 border-accent/20">
       <CardHeader className="flex flex-row items-center justify-between pb-3">
         <div className="flex-1">
           <CardTitle className="flex items-center gap-2">
-            <Calendar className="w-5 h-5 text-accent" />
+            <Calendar className="w-5 h-5 text-accent animate-pulse-slow" />
             {item.name} - 7-Day Price Analysis
           </CardTitle>
           <CardDescription className="mt-1">{item.region} Market | Last 7 Days</CardDescription>
@@ -76,37 +74,59 @@ export default function PriceTrendChart({ item, onClose }: PriceTrendChartProps)
 
       <CardContent className="space-y-6">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-          <Card className="bg-muted">
+          <Card className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-950 dark:to-orange-900 transform hover:scale-105 transition-transform animate-fade-in-up">
             <CardContent className="pt-4 pb-3">
               <p className="text-xs text-muted-foreground">Current</p>
-              <p className="text-xl font-bold text-accent">₹{item.price}</p>
-            </CardContent>
-          </Card>
-          <Card className="bg-muted">
-            <CardContent className="pt-4 pb-3">
-              <p className="text-xs text-muted-foreground">Average</p>
-              <p className="text-xl font-bold text-primary">₹{avgPrice}</p>
-            </CardContent>
-          </Card>
-          <Card className="bg-muted">
-            <CardContent className="pt-4 pb-3">
-              <p className="text-xs text-muted-foreground">Highest</p>
-              <p className="text-xl font-bold text-secondary">₹{maxPrice}</p>
-            </CardContent>
-          </Card>
-          <Card className="bg-muted">
-            <CardContent className="pt-4 pb-3">
-              <p className="text-xs text-muted-foreground">Lowest</p>
-              <p className="text-xl font-bold text-foreground">₹{minPrice}</p>
+              <p className="text-xl font-bold text-orange-600 dark:text-orange-400">PKR {item.price}</p>
             </CardContent>
           </Card>
           <Card
-            className={`${trend === "rising" ? "bg-destructive/10" : trend === "falling" ? "bg-secondary/10" : "bg-primary/10"}`}
+            className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900 transform hover:scale-105 transition-transform animate-fade-in-up"
+            style={{ animationDelay: "0.1s" }}
+          >
+            <CardContent className="pt-4 pb-3">
+              <p className="text-xs text-muted-foreground">Average</p>
+              <p className="text-xl font-bold text-blue-600 dark:text-blue-400">PKR {avgPrice}</p>
+            </CardContent>
+          </Card>
+          <Card
+            className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-950 dark:to-green-900 transform hover:scale-105 transition-transform animate-fade-in-up"
+            style={{ animationDelay: "0.2s" }}
+          >
+            <CardContent className="pt-4 pb-3">
+              <p className="text-xs text-muted-foreground">Highest</p>
+              <p className="text-xl font-bold text-green-600 dark:text-green-400">PKR {maxPrice}</p>
+            </CardContent>
+          </Card>
+          <Card
+            className="bg-gradient-to-br from-red-50 to-red-100 dark:from-red-950 dark:to-red-900 transform hover:scale-105 transition-transform animate-fade-in-up"
+            style={{ animationDelay: "0.3s" }}
+          >
+            <CardContent className="pt-4 pb-3">
+              <p className="text-xs text-muted-foreground">Lowest</p>
+              <p className="text-xl font-bold text-red-600 dark:text-red-400">PKR {minPrice}</p>
+            </CardContent>
+          </Card>
+          <Card
+            className={`transform hover:scale-105 transition-transform animate-fade-in-up ${
+              trend === "rising"
+                ? "bg-red-50 dark:bg-red-950"
+                : trend === "falling"
+                  ? "bg-green-50 dark:bg-green-950"
+                  : "bg-blue-50 dark:bg-blue-950"
+            }`}
+            style={{ animationDelay: "0.4s" }}
           >
             <CardContent className="pt-4 pb-3">
               <p className="text-xs text-muted-foreground">7-Day Change</p>
               <p
-                className={`text-xl font-bold ${trend === "rising" ? "text-destructive" : trend === "falling" ? "text-secondary" : "text-primary"}`}
+                className={`text-xl font-bold ${
+                  trend === "rising"
+                    ? "text-red-600 dark:text-red-400"
+                    : trend === "falling"
+                      ? "text-green-600 dark:text-green-400"
+                      : "text-blue-600 dark:text-blue-400"
+                }`}
               >
                 {priceChange >= 0 ? "+" : ""}
                 {priceChange.toFixed(2)} ({priceChangePercent}%)
@@ -140,22 +160,24 @@ export default function PriceTrendChart({ item, onClose }: PriceTrendChartProps)
                 strokeWidth={3}
                 dot={{ fill: "var(--color-accent)", r: 5 }}
                 activeDot={{ r: 7 }}
-                name="Price (₹)"
+                name="Price (PKR)"
               />
               <Bar yAxisId="right" dataKey="volume" fill="var(--color-primary)" opacity={0.3} name="Trade Volume" />
             </ComposedChart>
           </ResponsiveContainer>
         </div>
 
-        <div className="p-4 bg-muted rounded-lg border border-border">
-          <p className="text-sm font-medium mb-2">Market Insight</p>
+        <div className="p-4 bg-gradient-to-r from-accent/10 to-primary/10 rounded-lg border border-accent/30">
+          <p className="text-sm font-medium mb-2 flex items-center gap-2">
+            <span className="animate-pulse-slow">💡</span> Market Insight
+          </p>
           <p className="text-sm text-muted-foreground">
             {trend === "rising" &&
               `Prices for ${item.name} are trending upward with a ${priceChangePercent}% increase over the last week. This might be a good time to sell if you have stock.`}
             {trend === "falling" &&
               `Prices for ${item.name} are declining with a ${Math.abs(Number(priceChangePercent))}% decrease. Consider waiting for stabilization before selling.`}
             {trend === "stable" &&
-              `Prices for ${item.name} have remained stable around ₹${avgPrice}. Market conditions are consistent.`}
+              `Prices for ${item.name} have remained stable around PKR${avgPrice}. Market conditions are consistent.`}
           </p>
         </div>
       </CardContent>

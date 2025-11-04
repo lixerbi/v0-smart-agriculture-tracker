@@ -56,26 +56,26 @@ export default function FarmerDashboard() {
   return (
     <div className="space-y-6">
       {filteredData.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <Card className="bg-gradient-to-br from-primary/5 to-primary/10">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 animate-fade-in-up">
+          <Card className="bg-gradient-to-br from-primary/5 to-primary/10 transform hover:scale-105 transition-transform hover:shadow-lg">
             <CardContent className="pt-6">
               <p className="text-sm text-muted-foreground mb-1">Average Price</p>
-              <p className="text-3xl font-bold text-primary">₹{avgPrice}</p>
+              <p className="text-3xl font-bold text-primary">PKR {avgPrice}</p>
             </CardContent>
           </Card>
-          <Card className="bg-gradient-to-br from-secondary/5 to-secondary/10">
+          <Card className="bg-gradient-to-br from-secondary/5 to-secondary/10 transform hover:scale-105 transition-transform hover:shadow-lg">
             <CardContent className="pt-6">
               <p className="text-sm text-muted-foreground mb-1">Highest Price</p>
-              <p className="text-3xl font-bold text-secondary">₹{maxPrice}</p>
+              <p className="text-3xl font-bold text-secondary">PKR {maxPrice}</p>
             </CardContent>
           </Card>
-          <Card className="bg-gradient-to-br from-accent/5 to-accent/10">
+          <Card className="bg-gradient-to-br from-accent/5 to-accent/10 transform hover:scale-105 transition-transform hover:shadow-lg">
             <CardContent className="pt-6">
               <p className="text-sm text-muted-foreground mb-1">Lowest Price</p>
-              <p className="text-3xl font-bold text-accent">₹{minPrice}</p>
+              <p className="text-3xl font-bold text-accent">PKR {minPrice}</p>
             </CardContent>
           </Card>
-          <Card className="bg-gradient-to-br from-muted to-muted/50">
+          <Card className="bg-gradient-to-br from-muted to-muted/50 transform hover:scale-105 transition-transform hover:shadow-lg">
             <CardContent className="pt-6">
               <p className="text-sm text-muted-foreground mb-1">Total Items</p>
               <p className="text-3xl font-bold text-foreground">{filteredData.length}</p>
@@ -84,7 +84,7 @@ export default function FarmerDashboard() {
         </div>
       )}
 
-      <Card>
+      <Card className="animate-slide-in-left">
         <CardHeader>
           <CardTitle>Market Prices</CardTitle>
           <CardDescription>View current prices across regions and find best deals</CardDescription>
@@ -121,14 +121,14 @@ export default function FarmerDashboard() {
                   <tr className="border-b border-border">
                     <th className="text-left py-3 px-4 font-semibold">Item</th>
                     <th className="text-left py-3 px-4 font-semibold">Region</th>
-                    <th className="text-left py-3 px-4 font-semibold">Price</th>
+                    <th className="text-left py-3 px-4 font-semibold">Price (PKR)</th>
                     <th className="text-left py-3 px-4 font-semibold">Unit</th>
                     <th className="text-left py-3 px-4 font-semibold">Status</th>
                     <th className="text-left py-3 px-4 font-semibold">Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredData.map((item) => {
+                  {filteredData.map((item, index) => {
                     const itemAvg =
                       itemsByName[item.name]?.reduce((sum, i) => sum + i.price, 0) / itemsByName[item.name].length ||
                       item.price
@@ -136,12 +136,13 @@ export default function FarmerDashboard() {
                     return (
                       <tr
                         key={item.id}
-                        className="border-b border-border hover:bg-muted cursor-pointer transition-colors"
+                        className="border-b border-border hover:bg-muted cursor-pointer transition-colors animate-fade-in-up"
                         onClick={() => setSelectedItem(item)}
+                        style={{ animationDelay: `${index * 0.05}s` }}
                       >
                         <td className="py-3 px-4 font-medium">{item.name}</td>
                         <td className="py-3 px-4">{item.region}</td>
-                        <td className="py-3 px-4 font-semibold text-accent text-lg">₹{item.price}</td>
+                        <td className="py-3 px-4 font-semibold text-accent text-lg">PKR {item.price}</td>
                         <td className="py-3 px-4">{item.quantity}</td>
                         <td className="py-3 px-4">
                           <div className="flex items-center gap-1">
@@ -164,7 +165,7 @@ export default function FarmerDashboard() {
                               e.stopPropagation()
                               setSelectedItem(item)
                             }}
-                            className="text-sm px-3 py-1 bg-primary text-primary-foreground rounded hover:bg-primary/90 transition-colors"
+                            className="text-sm px-3 py-1 bg-primary text-primary-foreground rounded hover:bg-primary/90 transition-colors transform hover:scale-110"
                           >
                             View Trend
                           </button>

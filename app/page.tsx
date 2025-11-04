@@ -51,18 +51,26 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b border-border bg-card shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold text-primary">Kisan Bazaar</h1>
-            <p className="text-sm text-muted-foreground">Smart Agriculture Market Tracker</p>
-          </div>
+      <header className="border-b border-border bg-gradient-to-r from-card to-card/80 shadow-lg">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center animate-slide-in-left">
           <div className="flex items-center gap-4">
+            <div className="text-4xl animate-pulse-slow">👨‍🌾</div>
             <div>
+              <h1 className="text-3xl font-bold text-primary">Kisan Bazaar</h1>
+              <p className="text-sm text-muted-foreground">Smart Agriculture Market Tracker - Pakistan</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-4 animate-fade-in-up">
+            <div className="text-right">
               <p className="text-sm font-medium text-foreground">{userName}</p>
               <p className="text-xs text-muted-foreground capitalize">{userRole}</p>
             </div>
-            <Button variant="outline" size="sm" onClick={handleLogout} className="gap-2 bg-transparent">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleLogout}
+              className="gap-2 bg-transparent hover:bg-muted transform hover:scale-105 transition-transform"
+            >
               <LogOut className="w-4 h-4" />
               Logout
             </Button>
@@ -81,29 +89,35 @@ export default function Home() {
               <AdminDashboard />
             </TabsContent>
             <TabsContent value="stats">
-              <Card>
+              <Card className="animate-fade-in-up">
                 <CardHeader>
                   <CardTitle>Market Statistics</CardTitle>
                   <CardDescription>Overview of uploaded market data</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <Card className="bg-muted">
+                    <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900 transform hover:scale-105 transition-transform animate-fade-in-up">
                       <CardContent className="pt-6">
                         <p className="text-sm text-muted-foreground mb-2">Total Items</p>
-                        <p className="text-3xl font-bold text-primary">12</p>
+                        <p className="text-3xl font-bold text-blue-600 dark:text-blue-400">12</p>
                       </CardContent>
                     </Card>
-                    <Card className="bg-muted">
+                    <Card
+                      className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-950 dark:to-green-900 transform hover:scale-105 transition-transform animate-fade-in-up"
+                      style={{ animationDelay: "0.1s" }}
+                    >
                       <CardContent className="pt-6">
                         <p className="text-sm text-muted-foreground mb-2">Average Price</p>
-                        <p className="text-3xl font-bold text-accent">₹485</p>
+                        <p className="text-3xl font-bold text-green-600 dark:text-green-400">PKR 485</p>
                       </CardContent>
                     </Card>
-                    <Card className="bg-muted">
+                    <Card
+                      className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-950 dark:to-orange-900 transform hover:scale-105 transition-transform animate-fade-in-up"
+                      style={{ animationDelay: "0.2s" }}
+                    >
                       <CardContent className="pt-6">
                         <p className="text-sm text-muted-foreground mb-2">Regions</p>
-                        <p className="text-3xl font-bold text-secondary">5</p>
+                        <p className="text-3xl font-bold text-orange-600 dark:text-orange-400">5</p>
                       </CardContent>
                     </Card>
                   </div>
@@ -116,7 +130,7 @@ export default function Home() {
             <TabsList className="grid w-full grid-cols-4 mb-8">
               <TabsTrigger value="prices">Prices</TabsTrigger>
               <TabsTrigger value="weather">Weather</TabsTrigger>
-              <TabsTrigger value="advice">Advice</TabsTrigger>
+              <TabsTrigger value="advice">AI Advice</TabsTrigger>
               <TabsTrigger value="forum">Forum</TabsTrigger>
             </TabsList>
             <TabsContent value="prices">
